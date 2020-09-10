@@ -868,7 +868,7 @@ void tube_drawVector(cairo_t *cr, cairo_t *cr2)
 
 void tube_setupPainting(cairo_t *cr, cairo_t *cr2, char *fontName)
 {
-        cairo_set_antialias(cr, CAIRO_ANTIALIAS_BEST);      
+        cairo_set_antialias(cr, FONT_ANTIALIAS);      
 	cairo_set_line_width (cr, pensize);
         cairo_set_source_rgb(cr, 0, NORMAL_INTENSITY, 0);        
         cairo_select_font_face(cr, fontName, CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
@@ -877,6 +877,19 @@ void tube_setupPainting(cairo_t *cr, cairo_t *cr2, char *fontName)
 
 void tube_changeCharacterSize(cairo_t *cr, cairo_t *cr2,int charsPerLine, int charsPerPage, double fontSize)
 {
+        //HACK force rounded font scaling because we are using raster fonts
+        /*NOTE 
+        To be honest, I think this is how it was done on the tek as well, the 
+        default font is 2*rom font, and you could *probably* go 1*, 4* etc. as 
+        well. Here our 0.5 is the rom font integer scale (16 pts.) and the
+        default font size is 2*rom font (32 pts.)
+        */
+        if(fontSize < 1) {
+                fontSize = 0.5;
+        } else {
+                fontSize = (int)fontSize;
+        }
+        printf("DEBUG: font scaling requested: %f\n", fontSize);
         cairo_font_extents_t et;
         hDotsPerChar = windowWidth / charsPerLine;
         vDotsPerChar = windowHeight / charsPerPage;
