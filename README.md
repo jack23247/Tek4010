@@ -5,4 +5,5 @@ Proof-of-concept modification of the Tek4010 tube emulator to enable use of the 
 
 This is **not** a supported release, please use the original Tek4010 instead.
 
- ![testfont](/home/quartz/Desktop/Tek4010/tek4010.png)
+ ![testfont](https://raw.githubusercontent.com/jack23247/Tek4010/master/tek4010.png)
+
